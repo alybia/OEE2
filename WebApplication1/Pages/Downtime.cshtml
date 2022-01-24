@@ -3,23 +3,309 @@
 @{
     ViewData["Title"] = "Machine Downtime";
 }
-<h1>@ViewData["Title"]</h1>
+<h3>@ViewData["Title"]</h3>
 
-<p>Use this page to detail your site's downtime.</p>
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="" asp-page="/Index">Home</a></li>
+        <li class="breadcrumb-item active">Machine Downtime</li>
+    </ol>
+</nav>
+<div class="container">
 
-    <ul class="nav nav-tabs">
-        <li class="nav-item">
-            <a class="nav-link active" href="#">Action</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Performance</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#">Quality</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">OEE</a>
-        </li>
-    </ul>
+    <div class="row2">
+        <div class="col-md-12">
+            <br>
+            <button class="btn btn-default pull-right add-row"><i class="fa fa-plus"></i>&nbsp;&nbsp; Add Row</button>
+        </div>
+    </div>
+
+    <div class="row2">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="editableTable">
+                <thead>
+                    <tr>
+                        <th>Downtime Description</th>
+                        <th>Six Big Losses</th>
+                        <th>APQ</th>
+                        <th>Particular</th>
+                        <th>Action</th>
+                        <th>Department</th>
+                        <th>Time Start</th>
+                        <th>Time End</th>
+                        <th>Minutes</th>
+                        <th>Remarks</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-id="1">
+                        <td data-field="downtime">Changeover</td>
+                        <td data-field="loss">Planned Stops</td>
+                        <td data-field="apq">Availability Loss</td>
+                        <td data-field="part">Misaligned</td>
+                        <td data-field="act">Adjust</td>
+                        <td data-field="dept">Management</td>
+                        <td data-field="times">12:00</td>
+                        <td data-field="timee">01:00</td>
+                        <td data-field="minutes">60</td>
+                        <td data-field="remarks">Remarks</td>
+                        <td>
+                            <a class="button button-small edit" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a class="button button-small edit" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
 
 
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+<script type="text/javascript">
+    (function ($, window, document, undefined) {
+        var pluginName = "editable",
+            defaults = {
+                keyboard: true,
+                dblclick: true,
+                button: true,
+                buttonSelector: ".edit",
+                maintainWidth: true,
+                dropdowns: {},
+                edit: function () { },
+                save: function () { },
+                cancel: function () { }
+            };
+
+        function editable(element, options) {
+            this.element = element;
+            this.options = $.extend({}, defaults, options);
+
+            this._defaults = defaults;
+            this._name = pluginName;
+
+            this.init();
+        }
+
+        editable.prototype = {
+            init: function () {
+                this.editing = false;
+
+                if (this.options.dblclick) {
+                    $(this.element)
+                        .css('cursor', 'pointer')
+                        .bind('dblclick', this.toggle.bind(this));
+                }
+
+                if (this.options.button) {
+                    $(this.options.buttonSelector, this.element)
+                        .bind('click', this.toggle.bind(this));
+                }
+            },
+
+            toggle: function (e) {
+                e.preventDefault();
+
+                this.editing = !this.editing;
+
+                if (this.editing) {
+                    this.edit();
+                } else {
+                    this.save();
+                }
+            },
+
+            edit: function () {
+                var instance = this,
+                    values = {};
+
+                $('td[data-field]', this.element).each(function () {
+                    var input,
+                        field = $(this).data('field'),
+                        value = $(this).text(),
+                        width = $(this).width();
+
+                    values[field] = value;
+
+                    $(this).empty();
+
+                    if (instance.options.maintainWidth) {
+                        $(this).width(width);
+                    }
+
+                    if (field in instance.options.dropdowns) {
+                        input = $('<select></select>');
+
+                        for (var i = 0; i < instance.options.dropdowns[field].length; i++) {
+                            $('<option></option>')
+                                .text(instance.options.dropdowns[field][i])
+                                .appendTo(input);
+                        };
+
+                        input.val(value)
+                            .data('old-value', value)
+                            .dblclick(instance._captureEvent);
+                    } else {
+                        input = $('<input type="text" />')
+                            .val(value)
+                            .data('old-value', value)
+                            .dblclick(instance._captureEvent);
+                    }
+
+                    input.appendTo(this);
+
+                    if (instance.options.keyboard) {
+                        input.keydown(instance._captureKey.bind(instance));
+                    }
+                });
+
+                this.options.edit.bind(this.element)(values);
+            },
+
+            save: function () {
+                var instance = this,
+                    values = {};
+
+                $('td[data-field]', this.element).each(function () {
+                    var value = $(':input', this).val();
+
+                    values[$(this).data('field')] = value;
+
+                    $(this).empty()
+                        .text(value);
+                });
+
+                this.options.save.bind(this.element)(values);
+            },
+
+            cancel: function () {
+                var instance = this,
+                    values = {};
+
+                $('td[data-field]', this.element).each(function () {
+                    var value = $(':input', this).data('old-value');
+
+                    values[$(this).data('field')] = value;
+
+                    $(this).empty()
+                        .text(value);
+                });
+
+                this.options.cancel.bind(this.element)(values);
+            },
+
+            _captureEvent: function (e) {
+                e.stopPropagation();
+            },
+
+            _captureKey: function (e) {
+                if (e.which === 13) {
+                    this.editing = false;
+                    this.save();
+                } else if (e.which === 27) {
+                    this.editing = false;
+                    this.cancel();
+                }
+            }
+        };
+
+        $.fn[pluginName] = function (options) {
+            return this.each(function () {
+                if (!$.data(this, "plugin_" + pluginName)) {
+                    $.data(this, "plugin_" + pluginName,
+                        new editable(this, options));
+                }
+            });
+        };
+
+    })(jQuery, window, document);
+
+    editTable();
+
+    //custome editable starts
+    function editTable() {
+
+        $(function () {
+            var pickers = {};
+
+            $('table tr').editable({
+                dropdowns: {
+                    sex: ['Male', 'Female']
+                },
+                edit: function (values) {
+                    $(".edit i", this)
+                        .removeClass('fa-pencil')
+                        .addClass('fa-save')
+                        .attr('title', 'Save');
+
+                    pickers[this] = new Pikaday({
+                        field: $("td[data-field=birthday] input", this)[0],
+                        format: 'MMM D, YYYY'
+                    });
+                },
+                save: function (values) {
+                    $(".edit i", this)
+                        .removeClass('fa-save')
+                        .addClass('fa-pencil')
+                        .attr('title', 'Edit');
+
+                    if (this in pickers) {
+                        pickers[this].destroy();
+                        delete pickers[this];
+                    }
+                },
+                cancel: function (values) {
+                    $(".edit i", this)
+                        .removeClass('fa-save')
+                        .addClass('fa-pencil')
+                        .attr('title', 'Edit');
+
+                    if (this in pickers) {
+                        pickers[this].destroy();
+                        delete pickers[this];
+                    }
+                }
+            });
+        });
+
+    }
+
+    $(".add-row").click(function () {
+        $("#editableTable").find("tbody tr:first").before("<tr><td data-field='name'></td><td data-field='name'></td><td data-field='name'></td><td data-field='name'></td><td><a class='button button-small edit' title='Edit'><i class='fa fa-pencil'></i></a> <a class='button button-small' title='Delete'><i class='fa fa-trash'></i></a></td></tr>");
+        editTable();
+        setTimeout(function () {
+            $("#editableTable").find("tbody tr:first td:last a[title='Edit']").click();
+        }, 200);
+
+        setTimeout(function () {
+            $("#editableTable").find("tbody tr:first td:first input[type='text']").focus();
+        }, 300);
+
+        $("#editableTable").find("a[title='Delete']").unbind('click').click(function (e) {
+            $(this).closest("tr").remove();
+        });
+
+    });
+
+    function myFunction() {
+
+    }
+
+    $("#editableTable").find("a[title='Delete']").click(function (e) {
+        var x;
+        if (confirm("Are you sure you want to delete entire row?") == true) {
+            $(this).closest("tr").remove();
+        } else {
+
+        }
+    });
+
+</script>

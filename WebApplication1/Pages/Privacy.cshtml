@@ -5,4 +5,54 @@
 }
 <h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's information.</p>
+<p>Trial</p>
+
+<div class="container">
+
+    <div class="row2">
+        <div class="col-md-12">
+            <br>
+            <button class="btn btn-default pull-right add-row"><i class="fa fa-plus"></i>&nbsp;&nbsp; Add Row</button>
+        </div>
+    </div>
+
+    <div class="row2">
+        <div class="col-md-12">
+            <table class="table table-bordered" id="editableTable">
+                <thead>
+                    <tr>
+                        <th>Downtime Description</th>
+                        <th>Six Big Losses</th>
+                        <th>APQ</th>
+                        <th>Particular</th>
+                        <th>Action</th>
+                        <th>Department</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-id="1">
+                        <td data-field="downtime">Changeover</td>
+                        <td data-field="loss">Planned Stops</td>
+                        <td data-field="apq">Availability Loss</td>
+                        <td data-field="part">Misaligned</td>
+                        <td data-field="act">Adjust</td>
+                        <td data-field="dept">Management</td>
+                        <td>
+                            <a class="button button-small edit" title="Edit">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+
+                            <a class="button button-small edit" title="Delete">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+

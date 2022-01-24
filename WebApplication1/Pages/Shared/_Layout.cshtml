@@ -18,7 +18,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Vendor CSS Files -->
     <link href="~/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -31,6 +31,11 @@
     <!-- Template Main CSS File -->
     <link href="~/css/style.css" rel="stylesheet">
 
+    <!-- For Grid-->
+
+    <link rel="stylesheet" type="text/css" href="http://www.prepbootstrap.com/Content/shieldui-lite/dist/css/light/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
 </head>
 
@@ -40,7 +45,7 @@
     <header id="header" class="header fixed-top d-flex align-items-center">
 
         <div class="d-flex align-items-center justify-content-between">
-            <a href="index.html" class="logo d-flex align-items-center">
+            <a asp-area="" asp-page="/Index" class="logo d-flex align-items-center">
                 <img src="~/images/ipiccircle1.png" alt="IPIC logo">
                 <span class="d-none d-lg-block">OEE</span>
             </a>
@@ -204,7 +209,7 @@
         <ul class="sidebar-nav" id="sidebar-nav">
 
             <li class="nav-item">
-                <a class="nav-link " asp-area="" asp-page="/Index">
+                <a class="nav-link " asp-area="" asp-page="/Error">
                     <i class="bi bi-grid"></i>
                     <span>Dashboard</span>
                 </a>
@@ -261,7 +266,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="">
+                        <a asp-area="" asp-page="/Privacy">
                             <i class="bi bi-circle"></i><span>Equipment Request Form</span>
                         </a>
                     </li>
@@ -364,23 +369,27 @@
         <div class="copyright">
             &copy; Copyright <strong><span>Innovative Packaging Industry Corporation 2021</span></strong>. All Rights Reserved
         </div>
+    </footer>
+    <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
-        <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Vendor JS Files -->
+    <script src="~/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/vendor/chart.js/chart.min.js"></script>
+    <script src="~/vendor/echarts/echarts.min.js"></script>
+    <script src="~/vendor/quill/quill.min.js"></script>
+    <script src="~/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="~/vendor/tinymce/tinymce.min.js"></script>
+    <script src="~/vendor/php-email-form/validate.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.0/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/shieldui-lite/dist/js/shieldui-lite-all.min.js"></script>
 
-        <!-- Vendor JS Files -->
-        <script src="~/vendor/apexcharts/apexcharts.min.js"></script>
-        <script src="~/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-        <script src="~/vendor/chart.js/chart.min.js"></script>
-        <script src="~/vendor/echarts/echarts.min.js"></script>
-        <script src="~/vendor/quill/quill.min.js"></script>
-        <script src="~/vendor/simple-datatables/simple-datatables.js"></script>
-        <script src="~/vendor/tinymce/tinymce.min.js"></script>
-        <script src="~/vendor/php-email-form/validate.js"></script>
+    <script type="text/javascript" src="http://www.prepbootstrap.com/Content/data/shortGridData.js"></script>
+    <!-- Template Main JS File -->
+    <script src="~/js/main.js" asp-append-version="true"></script>
+    @* <script src="~/js/tablejs.js" asp-append-version="true"></script>*@
 
-        <!-- Template Main JS File -->
-        <script src="~/js/main.js" asp-append-version="true"></script>
-
-        @RenderSection("Scripts", required: false)
+    @RenderSection("Scripts", required: false)
 
 </body>
 

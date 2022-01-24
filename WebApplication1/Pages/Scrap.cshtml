@@ -6,3 +6,35 @@
 <h1>@ViewData["Title"]</h1>
 
 <p>Use this page to detail your site's Scrap Report.</p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <select required name="selectfield">
+                    <option value="" disabled selected>Select something...</option>
+                    <option value="select1-option1">select1-option1</option>
+                    <option value="select1-option2">select1-option2</option>
+                    <option value="select1-option3">select1-option3</option>
+                </select>
+            </td>
+            <td><input type="hidden" name="id" value="row1" /><input name="textfield" type="datetime-local" placeholder="Time Start" /></td>
+            <td><input type="hidden" name="id" value="row1" /><input name="textfield" type="datetime-local" placeholder="Time End" /></td>
+            <td><input type="hidden" name="id" value="row1" /><input name="textfield" type="datetime-local" placeholder="Minutes" /></td>
+
+            <td><a class="submit" href="#" data-action="/exampleurl">Update</a></td>
+        </tr>
+        <tr>
+            <td><input type="hidden" name="id" value="row2" /><input name="textfield" type="text" value="input2" /></td>
+            <td>
+                <select name="selectfield">
+                    <option selected value="select2-option1">select2-option1</option>
+                    <option value="select2-option2">select2-option2</option>
+                    <option value="select2-option3">select2-option3</option> 
+                </select>
+            </td>
+            <td><a class="submit" href="#" data-action="/different-url">Update</a></td>
+        </tr>
+        
+    </tbody>
+</table>

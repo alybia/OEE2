@@ -331,5 +331,3 @@ $(document).ready(function () {
 //    var data = row.find("input, select, radio").serialize();
 //    $.post(url, data, function (result) { console.log(result); });
 //});
-
-/*var rows = $('#editableTable').rows.length; */
